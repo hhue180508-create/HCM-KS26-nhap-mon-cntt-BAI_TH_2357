@@ -1,0 +1,72 @@
+ BÀI TỔNG HỢP: CYBER ARENA 🎮
+Phần 1. Lĩnh vực CNTT và đơn vị lưu trữ
+Câu 1. Chọn nhân sự kỹ thuật
+Em chọn ứng viên B: Mạng máy tính / Quản trị hệ thống.
+Vì Cyber Arena cần máy tính hoạt động ổn định, mạng Internet tốt để livestream và hỗ trợ sửa chữa khi máy gặp sự cố. Đây là nhu cầu cấp thiết hơn so với việc phát triển phần mềm đặt lịch thuê máy trong giai đoạn đầu.
+Câu 2. Sắp xếp đơn vị theo thứ tự tăng dần
+Byte → KB → MB → GB → TB
+Phần 2. Mô hình IPO và lĩnh vực CNTT
+Câu 1. Điền bảng IPO
+Thành phần
+Trong hệ thống quay/xem lại trận đấu
+Input
+Video trận đấu và thao tác của người dùng
+Process
+CPU xử lý, mã hóa video và phát lại
+Output
+Video trận đấu để xem lại và phân tích
+Storage
+SSD lưu video trận đấu
+
+Câu 2. Các lĩnh vực CNTT liên quan
+Mạng máy tính / Quản trị hệ thống: Đảm bảo kết nối Internet ổn định để livestream trận đấu lên YouTube.
+Kỹ thuật phần mềm: Phát triển phần mềm quản lý video, tìm kiếm và xem lại các trận đấu.
+Phần 3. Tính toán dung lượng và tốc độ mạng
+Câu 1. Tính dung lượng lưu trữ
+a) Dung lượng video trong 1 tháng
+
+20500=10.000MB
+b) Đổi sang GB
+
+10.00010249,77GB
+c) SSD 512 GB có đủ không?
+Có, vì dung lượng video chỉ khoảng 9,77 GB.
+Dung lượng còn trống sau tháng đầu tiên:
+
+512-9,765625502,23GB
+Kết luận: SSD còn khoảng 502,23 GB, bỏ qua dung lượng hệ điều hành và game như đề bài yêu cầu.
+Câu 2. Tính tốc độ mạng
+a) Đổi 100 Mbps sang MB/s
+
+1008=12,5MB/s
+b) Thời gian upload video 200 MB
+
+20012,5=16giây
+Thời gian tải lên tối thiểu theo lý thuyết là 16 giây.
+c) Vì sao thực tế lâu hơn?
+Vì tốc độ upload thực tế thường thấp hơn tốc độ tối đa lý thuyết do dao động đường truyền và lưu lượng mạng.
+Phần 4. Phần cứng và mô hình DIKW
+Câu 1. Nâng cấp RAM hay CPU?
+Em chọn nâng cấp CPU.
+CPU chịu trách nhiệm xử lý các tác vụ như chạy game, mã hóa và xử lý video livestream. Khi CPU không đủ khả năng xử lý đồng thời các tác vụ này, máy có thể bị giật, vì vậy nâng cấp CPU mạnh hơn có thể cải thiện hiệu suất. Tuy nhiên, cần kiểm tra mức sử dụng CPU và RAM trước khi quyết định nâng cấp thực tế.
+Câu 2. Áp dụng mô hình DIKW
+Tình huống: Huấn luyện viên xem video thấy tuyển thủ hay chết ở phút 15-20, phát hiện do thiếu tầm nhìn bản đồ, nên yêu cầu mua thêm mắt (Ward) cho trận sau.
+Thành phần
+Nội dung trong tình huống
+Vì sao thuộc tầng này?
+Data
+Video trận đấu và thời điểm tuyển thủ bị hạ gục từ phút 15-20
+Đây là dữ liệu thô được ghi lại từ trận đấu.
+Information
+Tuyển thủ thường bị hạ gục trong khoảng phút 15-20
+Dữ liệu được tổng hợp để nhận ra một mẫu lặp lại.
+Knowledge
+Nguyên nhân là thiếu tầm nhìn bản đồ
+Huấn luyện viên phân tích thông tin để xác định nguyên nhân của vấn đề.
+Wisdom
+Yêu cầu mua thêm mắt (Ward) cho trận sau
+Huấn luyện viên áp dụng hiểu biết để đưa ra quyết định cải thiện chiến thuật.
+
+Kết luận: DIKW giúp chuyển từ dữ liệu trận đấu thành thông tin, tìm ra nguyên nhân và đưa ra quyết định phù hợp để nâng cao hiệu quả thi đấu.
+
+

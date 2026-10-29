@@ -1,0 +1,109 @@
+PHẦN 1. CLI vs GUI và cấu trúc câu lệnh
+Câu 1. Phân tích câu lệnh
+Câu lệnh: ls -Force C:\Windows\Logs
+Command: ls là alias của Get-ChildItem, dùng để liệt kê nội dung thư mục.
+Options/Flags: -Force hiển thị cả các mục ẩn hoặc mục hệ thống mà lệnh thông thường có thể bỏ qua.
+Argument: C:\Windows\Logs là đường dẫn thư mục cần xem.
+Câu 2. Vì sao phải dùng Terminal (PowerShell/SSH)?
+Nhóm cần sử dụng Terminal vì máy chủ Cloud thường được quản lý từ xa qua SSH, đặc biệt với máy chủ Linux không có giao diện đồ họa. Terminal giúp nhóm:
+Quản lý từ xa: kết nối và thao tác trực tiếp trên máy chủ thông qua SSH.
+Tự động hóa: chạy nhiều lệnh và script để cài đặt, cấu hình, kiểm thử dự án.
+Tiết kiệm tài nguyên: giảm nhu cầu sử dụng giao diện đồ họa, phù hợp với máy chủ Cloud.
+PHẦN 2. Điều hướng hệ thống file
+Câu 3. Di chuyển vào thư mục project bằng Relative Path
+Đang đứng tại C:\Users\student\Desktop:
+cd .\quan-ly-sinh-vien
+Đây là Relative Path vì đường dẫn được xác định dựa trên vị trí hiện tại.
+Câu 4. Absolute Path tới file main.py
+C:\Users\student\Desktop\quan-ly-sinh-vien\src\main.py
+Đây là Absolute Path vì đường dẫn bắt đầu từ ổ đĩa C:\.
+Câu 5. Xem toàn bộ nội dung thư mục data, kể cả file ẩn
+Giả sử đang đứng trong thư mục src:
+ls -Force ..\data
+Giải thích:
+..: quay lên thư mục cha quan-ly-sinh-vien.
+data: truy cập thư mục data cùng cấp với src.
+-Force: hiển thị cả các mục ẩn.
+PHẦN 3. Thao tác file và thư mục
+Câu 6. Tạo đồng thời hai thư mục src và data
+Thực hiện tại thư mục Desktop:
+New-Item -ItemType Directory -Path ".\quan-ly-sinh-vien\src", ".\quan-ly-sinh-vien\data" -Force
+Lệnh tạo hai thư mục src và data. Với PowerShell, -Force cho phép tạo lại các mục đã tồn tại mà không báo lỗi trong những trường hợp phù hợp. Tuy nhiên, nếu thư mục cha chưa tồn tại, New-Item không tự động tạo toàn bộ chuỗi thư mục cha như mkdir -p của Bash.
+Để bảo đảm tạo cả thư mục gốc và hai thư mục con, có thể dùng:
+mkdir .\quan-ly-sinh-vien, .\quan-ly-sinh-vien\src, .\quan-ly-sinh-vien\data -Force
+Câu 7. Tạo ba file rỗng trong cùng một dòng lệnh
+Giả sử đã đứng trong thư mục quan-ly-sinh-vien\src đối với hai file Python, còn README.md nằm ở thư mục gốc. Dùng:
+New-Item -ItemType File -Path ".\src\main.py", ".\src\utils.py", ".\README.md" -Force
+Lệnh trên tạo các file theo đường dẫn tương đối từ thư mục gốc của project. Nếu đang đứng ngay trong thư mục project thì sử dụng đúng đường dẫn này.
+Câu 8. Đổi tên thư mục và sao lưu toàn bộ project
+a) Đổi tên thư mục gốc
+Đang đứng tại Desktop:
+Rename-Item -Path ".\quan-ly-sv" -NewName "quan-ly-sinh-vien"
+b) Sao lưu toàn bộ thư mục, gồm cả nội dung con
+Copy-Item -Path ".\quan-ly-sinh-vien" -Destination ".\backup-quan-ly-sinh-vien" -Recurse
+Trong đó, -Recurse cho phép sao chép cả các thư mục con và file bên trong.
+PHẦN 4. Xử lý lỗi Terminal
+Câu 9. Log lỗi số 2: Cannot find path
+Lệnh gây lỗi:
+cd scr
+Nguyên nhân: Có khả năng gõ sai tên thư mục. Tên đúng trong cấu trúc project là src, không phải scr.
+Cách khắc phục: Dùng phím Tab để tự động hoàn thành tên thư mục.
+cd .\s
+Sau đó nhấn Tab để PowerShell gợi ý tên phù hợp, rồi nhấn Enter khi đúng là src.
+Có thể kiểm tra thư mục hiện có bằng:
+ls
+Câu 10. Log lỗi số 3: Access is denied
+Lệnh gây lỗi:
+.\setup.ps1
+Nguyên nhân: PowerShell báo không có quyền thực thi hoặc truy cập file. Đây tương ứng với lỗi Access is denied (Permission denied) trên Windows.
+Cách khắc phục:
+1. Kiểm tra file có tồn tại và quyền truy cập:
+Get-Item .\setup.ps1
+2. Nếu file bị chặn do tải từ Internet, kiểm tra trước nguồn gốc và độ an toàn. Chỉ bỏ chặn nếu tin cậy:
+Unblock-File .\setup.ps1
+3. Nếu vẫn bị từ chối, kiểm tra quyền truy cập file và thư mục. Chỉ chạy PowerShell với quyền quản trị khi thực sự cần thiết và được cho phép.
+Lưu ý: Access is denied không đồng nghĩa chắc chắn với lỗi Execution Policy. Nếu thông báo là running scripts is disabled on this system, đó mới là dấu hiệu rõ hơn của chính sách thực thi script.
+Câu 11. Log lỗi số 1: Xóa thư mục có nội dung con
+Nguyên nhân: Lệnh rm old-version đang xóa một thư mục chứa file hoặc thư mục con. PowerShell cảnh báo vì chưa chỉ định tham số -Recurse.
+Đơn thuốc:
+Remove-Item -Path ".\old-version" -Recurse -Force
+Giải thích:
+-Recurse: xóa cả thư mục con và file bên trong.
+-Force: bỏ qua một số hạn chế thông thường, chẳng hạn thuộc tính chỉ đọc, nếu có thể.
+Lệnh này không hỏi xác nhận trong trường hợp thông thường, nhưng hãy chắc chắn đường dẫn chính xác trước khi chạy vì nội dung sẽ bị xóa.
+Câu 12. Phân tích Log lỗi số 4 theo quy trình 3 bước
+(a) Dòng chứa thông điệp lỗi trực tiếp nhất
+FileNotFoundError: [Errno 2] No such file or directory: 'data/input.csv'
+(b) Từ khóa lỗi (Error Keyword)
+FileNotFoundError
+Ý nghĩa: chương trình Python không tìm thấy file cần mở theo đường dẫn đã cung cấp.
+(c) Điều cần kiểm tra tiếp để sửa lỗi
+Kiểm tra hai yếu tố:
+- Vị trí hiện tại: chương trình được chạy từ thư mục src:
+C:\Users\student\Desktop\quan-ly-sinh-vien\src
+- Đường dẫn trong code: data/input.csv là đường dẫn tương đối, nên Python đang tìm file tại:
+C:\Users\student\Desktop\quan-ly-sinh-vien\src\data\input.csv
+Trong khi file thực tế nằm tại:
+C:\Users\student\Desktop\quan-ly-sinh-vien\data\input.csv
+Cách khắc phục đơn giản: quay về thư mục gốc của project rồi chạy chương trình:
+cd ..
+python .\src\main.py
+Khi đó, đường dẫn tương đối data/input.csv sẽ trỏ đúng vào file dữ liệu nếu cấu trúc thư mục được tạo như đề bài.
+Kiểm tra nhanh trước khi nộp bài
+Chạy các lệnh sau trong PowerShell để xác nhận cấu trúc project:
+cd "$HOME\Desktop\quan-ly-sinh-vien"
+Get-ChildItem -Recurse -Force
+Cấu trúc cần có:
+quan-ly-sinh-vien
+│   README.md
+│
+├── src
+│   ├── main.py
+│   └── utils.py
+│
+└── data
+    └── input.csv
+Lưu ý: Nếu chưa tạo input.csv, hãy tạo file bằng lệnh PowerShell:
+New-Item -ItemType File -Path ".\data\input.csv" -Force
+
+
